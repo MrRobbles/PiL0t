@@ -36,7 +36,7 @@ The interface is dark, terminal-inspired, and designed to feel at home on the ki
 SSH into your Pi and run:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/YOURUSER/pil0t/main/install.sh | sudo bash
+curl -fsSL https://raw.githubusercontent.com/MrRobbles/PiL0t/refs/heads/main/install.sh | sudo bash
 ```
 
 That's it. The installer handles everything — dependencies, directory structure, systemd services, sudoers, and default config. On a Pi 3B+ with a decent SD card it takes under two minutes.
