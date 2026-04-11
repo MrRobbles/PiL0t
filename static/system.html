@@ -1192,13 +1192,9 @@ async function gitAction(action){
   if(d.ok)loadGit();
 }
 
-// bridge section removed
 
-// applyBridge removed
 
-// discoverDevices removed
 
-// removeBridge removed
 
 // ── Packages ──────────────────────────────────────────────
 function showPkgOut(text,isErr=false){
@@ -1275,7 +1271,7 @@ async function refreshUpdateStatus(){
 
 
 // ── Branding ──────────────────────────────────────────────────────────────────
-async async function loadBranding() {
+async function loadBranding() {
   const d = await api('/api/branding');
   if (!d || !d.ok) return;
   const b = d;
@@ -1695,7 +1691,7 @@ setTimeout(function() {
   safeCall(loadWifiCurrent);
   safeCall(loadScripts);
   safeCall(loadCron);
-  safeCall(loadBridgeStatus);
+  // removed
 }, 1200);
 setInterval(refreshMetrics, 2000);
 setInterval(async function() {
