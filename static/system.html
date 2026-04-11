@@ -1193,8 +1193,8 @@ async function gitAction(action){
 }
 
 // ── Bridge ────────────────────────────────────────────────
-async function loadBridgeStatus(){
-  const d=await api('/api/bridge/status');
+async function // bridge removed{
+  const d=await Promise.resolve({ok:false});
   if(!d.ok){ledErr('led-bridge');return;}
   ledOk('led-bridge');
   const setDot=(dotId,valId,on,label)=>{
@@ -1214,7 +1214,7 @@ async function applyBridge(){
   const out = document.getElementById('bridge-out');
   out.className='out-box scroll show';
   out.textContent='Applying bridge configuration' + (use_dhcp?' + DHCP server...':'...');
-  const d = await api('/api/bridge/apply','POST',{eth_ip,eth_mask,use_dhcp});
+  const d = await api('/api/wifi/apply','POST',{eth_ip,eth_mask,use_dhcp});
   out.textContent = d.output||d.error;
   if(d.ok){
     const msg = use_dhcp
@@ -1222,7 +1222,7 @@ async function applyBridge(){
       : 'Bridge configured on '+eth_ip;
     toast(msg);
   } else { toast(d.error,true); }
-  loadBridgeStatus();
+  // // bridge removed; // bridge removed
 }
 
 async function discoverDevices(){
@@ -1230,7 +1230,7 @@ async function discoverDevices(){
   const out = document.getElementById('bridge-out');
   out.className='out-box scroll show';
   out.textContent='Scanning eth0 subnet for devices...';
-  const d = await api('/api/bridge/discover','POST',{eth_ip});
+  const d = await api('/api/wifi/discover','POST',{eth_ip});
   if(!d.ok){ out.textContent='Error: '+d.error; return; }
   if(!d.devices.length){
     out.textContent='No devices found on eth0 subnet.\nMake sure printer is connected and powered on.';
@@ -1245,9 +1245,9 @@ async function discoverDevices(){
 }
 
 async function removeBridge(){
-  const d=await api('/api/bridge/remove','POST');
+  const d=await api('/api/wifi/remove','POST');
   d.ok?toast('Bridge removed'):toast(d.error,true);
-  loadBridgeStatus();
+  // // bridge removed; // bridge removed
 }
 
 // ── Packages ──────────────────────────────────────────────
@@ -1325,12 +1325,12 @@ async function refreshUpdateStatus(){
 
 
 // ── Branding ──────────────────────────────────────────────────────────────────
-async function loadBranding() {
+async async function loadBranding() {
   const d = await api('/api/branding');
-  if (!d.ok) return;
-  const b = d.branding;
-  document.getElementById('brand-title').value    = b.title    || '';
-  document.getElementById('brand-subtitle').value = b.subtitle || '';
+  if (!d || !d.ok) return;
+  const b = d;
+  document.getElementById('brand-title').value    = (b.title    || '');
+  document.getElementById('brand-subtitle').value = (b.subtitle || '');
   updateBrandPreview();
   // Apply to page header
   applyBranding(b);
