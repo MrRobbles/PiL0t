@@ -1192,63 +1192,13 @@ async function gitAction(action){
   if(d.ok)loadGit();
 }
 
-// ── Bridge ────────────────────────────────────────────────
-async function // bridge removed{
-  const d=await Promise.resolve({ok:false});
-  if(!d.ok){ledErr('led-bridge');return;}
-  ledOk('led-bridge');
-  const setDot=(dotId,valId,on,label)=>{
-    document.getElementById(dotId).className='bridge-dot '+(on?'on':'off');
-    document.getElementById(valId).textContent=label;
-  };
-  setDot('bridge-fwd-dot','bridge-fwd-val',d.forwarding,d.forwarding?'ENABLED':'DISABLED');
-  setDot('bridge-masq-dot','bridge-masq-val',d.masquerade,d.masquerade?'ACTIVE':'NOT SET');
-  document.getElementById('bridge-eth-ip').textContent=d.eth_ip||'Not configured';
-  document.getElementById('bridge-wlan-ip').textContent=d.wlan_ip||'--';
-}
+// bridge section removed
 
-async function applyBridge(){
-  const eth_ip  = document.getElementById('bridge-eth-cfg').value;
-  const eth_mask = document.getElementById('bridge-mask-cfg').value;
-  const use_dhcp = document.getElementById('bridge-dhcp').checked;
-  const out = document.getElementById('bridge-out');
-  out.className='out-box scroll show';
-  out.textContent='Applying bridge configuration' + (use_dhcp?' + DHCP server...':'...');
-  const d = await api('/api/wifi/apply','POST',{eth_ip,eth_mask,use_dhcp});
-  out.textContent = d.output||d.error;
-  if(d.ok){
-    const msg = use_dhcp
-      ? 'Bridge + DHCP ready. Connect printer via ethernet — it will get IP '+d.dhcp_range
-      : 'Bridge configured on '+eth_ip;
-    toast(msg);
-  } else { toast(d.error,true); }
-  // // bridge removed; // bridge removed
-}
+// applyBridge removed
 
-async function discoverDevices(){
-  const eth_ip = document.getElementById('bridge-eth-cfg').value;
-  const out = document.getElementById('bridge-out');
-  out.className='out-box scroll show';
-  out.textContent='Scanning eth0 subnet for devices...';
-  const d = await api('/api/wifi/discover','POST',{eth_ip});
-  if(!d.ok){ out.textContent='Error: '+d.error; return; }
-  if(!d.devices.length){
-    out.textContent='No devices found on eth0 subnet.\nMake sure printer is connected and powered on.';
-  } else {
-    out.textContent='Devices found:\n' + d.devices.map(x=>x.ip).join('\n');
-    // Auto-update printer config if only one device found
-    if(d.devices.length===1){
-      toast('Printer found at '+d.devices[0].ip+' — updating config');
-      await api('/api/config','POST',{printer_ip:d.devices[0].ip});
-    }
-  }
-}
+// discoverDevices removed
 
-async function removeBridge(){
-  const d=await api('/api/wifi/remove','POST');
-  d.ok?toast('Bridge removed'):toast(d.error,true);
-  // // bridge removed; // bridge removed
-}
+// removeBridge removed
 
 // ── Packages ──────────────────────────────────────────────
 function showPkgOut(text,isErr=false){
