@@ -1,4 +1,3 @@
-[README.md](https://github.com/user-attachments/files/26637203/README.md)
 # PiL0t
 
 > A lightweight Raspberry Pi management console and ZPL print server — inspired by Webmin, built for speed.
