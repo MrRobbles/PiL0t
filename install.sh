@@ -237,8 +237,6 @@ WantedBy=multi-user.target
 SERVICE
 ok "pil0t-tracker.service"
 
-# Update service with correct python path
-sed -i "s|ExecStart=.*|ExecStart=$PYTHON_BIN /etc/pil0t/app.py|" /etc/systemd/system/pil0t-web.service
 systemctl daemon-reload
 systemctl enable pil0t-web  2>/dev/null
 systemctl enable pil0t-tracker 2>/dev/null
